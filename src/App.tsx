@@ -32,7 +32,7 @@ class App extends React.Component<AppProps, AppState> {
     this.state = {}
   }
 
-  public componentWillMount() {
+  public componentDidMount() {
     this.startClient()
   }
 
@@ -69,6 +69,7 @@ class App extends React.Component<AppProps, AppState> {
         this.soyuzClient.getQueryTree().getRoot(),
         this.query.getQuery(),
         (val: any) => {
+            console.log('value updated', val)
           if (val) {
             this.setState(val)
           }

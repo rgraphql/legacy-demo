@@ -1,10 +1,18 @@
 package hack
 
 import (
-	// _ code gen
-	_ "github.com/square/goprotowrap/cmd/protowrap"
-	// _ code gen
-	_ "github.com/golangci/golangci-lint/cmd/golangci-lint"
-	// _ code gen
-	_ "github.com/golang/protobuf/protoc-gen-go"
+	// _ imports protowrap
+	_ "github.com/square/goprotowrap"
+	// _ imports grpc
+	_ "google.golang.org/protobuf/cmd/protoc-gen-go"
+	// _ imports protoc-gen-go-vtproto
+	_ "github.com/planetscale/vtprotobuf/cmd/protoc-gen-go-vtproto"
+	// _ imports grpc
+	_ "google.golang.org/grpc/cmd/protoc-gen-go-grpc"
+	// _ imports golangci-lint
+	_ "github.com/golangci/golangci-lint/pkg/golinters"
+	// _ imports golangci-lint commands
+	_ "github.com/golangci/golangci-lint/pkg/commands"
+	// _ imports go-mod-outdated
+	_ "github.com/psampaz/go-mod-outdated"
 )

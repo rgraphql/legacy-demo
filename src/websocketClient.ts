@@ -1,7 +1,8 @@
 import * as graphql from 'graphql'
-import { rgraphql } from 'rgraphql'
-import { demo } from './pb/demo'
+import * as rgraphql from 'rgraphql'
 import { SoyuzClient } from 'soyuz'
+
+import { RPC, RPCMessage } from './pb/demo.pb'
 
 // DialWebsocketClient dials a SoyuzClient over websocket.
 export async function DialWebsocketClient(
@@ -11,21 +12,22 @@ export async function DialWebsocketClient(
   const ws = new WebSocket(serverURL)
   return new Promise<SoyuzClient>((resolve, reject) => {
     let client: SoyuzClient
-    ws.onopen = (e: Event) => {
+    ws.onopen = (_: Event) => {
       console.log('connected')
-      client = new SoyuzClient(schema, (msg: rgraphql.IRGQLClientMessage) => {
+      client = new SoyuzClient(schema, (msg: rgraphql.RGQLClientMessage) => {
         // Transmit the message to the server.
         /* tslint:disable-next-line */
         console.log('tx:', msg)
-        const data = demo.RPCMessage.encode({
-          rpcId: demo.RPC.RPC_RGQLClientMessage,
+        const data = RPCMessage.encode({
+          rpcId: RPC.RPC_RGQLClientMessage,
           rgqlClientMessage: msg,
+          rgqlServerMessage: undefined,
         }).finish()
         ws.send(data)
       })
       resolve(client)
     }
-    ws.onclose = (e: Event) => {
+    ws.onclose = (_: Event) => {
       console.log('disconnected')
       if (!client) {
         reject(new Error('connection failed'))
@@ -47,14 +49,14 @@ export async function DialWebsocketClient(
         data = new Uint8Array(dataArrayBuffer)
       }
       try {
-        const msg = demo.RPCMessage.decode(data)
+        const msg = RPCMessage.decode(data)
         switch (msg.rpcId) {
-          case demo.RPC.RPC_RGQLServerMessage:
+          case RPC.RPC_RGQLServerMessage:
             if (msg.rgqlServerMessage) {
               client.handleMessages([msg.rgqlServerMessage])
             }
             break
-          case demo.RPC.RPC_Ping:
+          case RPC.RPC_Ping:
             break
           default:
             /* tslint:disable-next-line */

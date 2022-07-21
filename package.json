@@ -2,33 +2,43 @@
   "name": "magellan-soyuz-demo",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^14.3.0",
-    "@types/jest": "^28.1.6",
-    "@types/node": "^18.0.6",
-    "@types/react": "^18.0.15",
-    "@types/react-dom": "^18.0.6",
-    "graphql": "^16.5.0",
-    "protobufjs": "^7.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-monaco-editor": "^0.49.0",
-    "react-scripts": "5.0.1",
-    "soyuz": "^0.6.0",
-    "typescript": "~4.7.4"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "gen:proto": "make genproto",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "precommit": "lint-staged"
+    "gen": "make genproto",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "deps": "depcheck --ignores bufferutil,utf-8-validate,ts-proto,ts-poet,esbuild,protobufjs,graphql,@aperturerobotics/ts-common,@types/jest,typedoc",
+    "lint": "npm run lint:go && npm run lint:js",
+    "lint:go": "make lint",
+    "lint:js": "eslint -c .eslintrc.js --ext .ts ./**/*.ts",
+    "precommit": "npm run format",
+    "format": "prettier --write './!(vendor|dist)/**/(*.ts|*.tsx|*.html|*.css)'",
+    "patch": "patch-package --use-yarn --patch-dir ./node_modules/@aperturerobotics/ts-common/patches",
+    "prepare": "npm run patch && go mod vendor"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@types/jest": "^28.1.6",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "eslint-config-prettier": "^8.5.0",
+    "graphql": "^16.5.0",
+    "husky": "^8.0.1",
+    "long": "^5.2.0",
+    "monaco-editor": "^0.33.0",
+    "protobufjs": "^7.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-monaco-editor": "^0.49.0",
+    "react-scripts": "5.0.1",
+    "rgraphql": "^1.1.1",
+    "soyuz": "^0.7.1",
+    "typescript": "~4.7.4"
   },
   "browserslist": {
     "production": [
@@ -58,7 +68,12 @@
     }
   },
   "devDependencies": {
+    "@aperturerobotics/ts-common": "^0.1.0",
+    "@typescript-eslint/parser": "^5.30.7",
+    "depcheck": "^1.4.3",
     "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "ts-poet": "^4.15.0",
+    "ts-proto": "^1.118.0"
   }
 }

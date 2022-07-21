@@ -1,4 +1,4 @@
-import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api'
+import * as monacoEditor from 'monaco-editor'
 import * as React from 'react'
 import MonacoEditor from 'react-monaco-editor'
 

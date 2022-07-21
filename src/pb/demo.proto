@@ -1,7 +1,7 @@
 syntax = "proto3";
 package demo;
 
-import "node_modules/rgraphql/rgraphql.proto";
+import "github.com/rgraphql/rgraphql/rgraphql.proto";
 
 // RPC is the rpc type enum.
 enum RPC {
