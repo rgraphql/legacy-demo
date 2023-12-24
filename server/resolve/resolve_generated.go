@@ -1,10 +1,14 @@
-//+build !magellan_analyze
+//go:build !magellan_analyze
+// +build !magellan_analyze
 
 package resolve
 
-import "context"
-import "github.com/rgraphql/magellan/resolver"
-import "github.com/rgraphql/magellan-soyuz-demo/server/simple"
+import (
+	"context"
+
+	"github.com/rgraphql/magellan-soyuz-demo/server/simple"
+	"github.com/rgraphql/magellan/resolver"
+)
 
 func ResolvePerson(rctx *resolver.Context, r *simple.PersonResolver) {
 	if r == nil {
